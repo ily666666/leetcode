@@ -21,20 +21,50 @@ using namespace std;
 class Solution{
 public:
     int removeDuplicates(vector<int>& nums){
-        int count=1;
-        for (int i = 1; i < nums.size(); ++i) {
+        int count=1,i=1,j=1;
+        while (i<nums.size()){
             if (nums[i]==nums[i-1]){
-                count+=1;
-                if (count>2){
-                    nums.erase(nums.begin()+i);
-                    i=i-1;
-                }
+                count++;
+            } else{
+                count=1;
+
             }
-            else count=1;
+            //nums[i]==nums[i-1]或者不等于的情况都要覆盖
+            if (count<=2){
+                if (i!=j)
+                    nums[j]=nums[i];
+                j++;
+            }
+            i++;
+
         }
-        return nums.size();
+        return j;
+    }
+
+    int removeDuplicates2(vector<int>& nums){
+        int count=1,i=1,j=1;
+        while (i<nums.size()){
+            if (nums[i]==nums[i-1]){
+                count++;
+                if (count>2)
+                    i++;
+                else{
+                    nums[j]=nums[i];
+                    i++;
+                    j++;
+                }
+            } else{
+                count=1;
+                nums[j]=nums[i];
+                i++;
+                j++;
+            }
+        }
+        return j;
     }
 };
+
+
 int main() {
 
     int arr[]={1,1,1,2,2,3};
